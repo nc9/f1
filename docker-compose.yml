@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    environment:
+      - TZ
+      - TIMESCALEDB_TELEMETRY=off
+      - POSTGRES_USER
+      - POSTGRES_DB
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - ${HOST:-127.0.0.1}:14433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/
+
+volumes:
+  postgres_data:
+    driver: local
